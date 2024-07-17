@@ -9,6 +9,7 @@ Route::get('/', function () {
 
 Route::controller(RegistrantController::class)
     ->group(function () {
+    Route::get('/data', 'data');
     Route::post('/neetoform/ieee', 'store_ieee');
     Route::post('/neetoform/non_ieee', 'store_non_ieee');
 });
