@@ -11,15 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class RegistrantController extends Controller
 {
-    public function data()
+    public function return_clean($data, $is_ieee)
     {
-        return Storage::json('data.json');
-    }
-
-    public function store_ieee(Request $request): JsonResponse|array
-    {
-        $data = $request->all()["webhook"]["answers"];
-
         $clean_data = [];
 
         $clean_data["name"] = $data[0]["value"];
@@ -30,10 +23,28 @@ class RegistrantController extends Controller
         $clean_data["food_preferences"] = $data[5]["value"][0];
 
         if(isset($data[7]) && $data[6]["value"][0] == "Others"){
-            $clean_data["college"] = $data[7]["value"];
+            $clean_data["college_name"] = $data[7]["value"];
         }else{
-            $clean_data["college"] = $data[6]["value"][0];
+            $clean_data["college_name"] = $data[6]["value"][0];
         }
+
+        $clean_data["ticket_type"] = "Normal Registration";
+
+        $clean_data["is_ieee_member"] = $is_ieee;
+
+        return $clean_data;
+    }
+
+    public function data()
+    {
+        return Storage::json('data.json');
+    }
+
+    public function store_ieee(Request $request): JsonResponse|array
+    {
+        $data = $request->all()["webhook"]["answers"];
+
+        $clean_data = $this->return_clean($data, true);
 
         $return_data =  [
             "message" => "success",
@@ -49,9 +60,15 @@ class RegistrantController extends Controller
     {
         $data = $request->all()["webhook"]["answers"];
 
-        return [
+        $clean_data = $this->return_clean($data, false);
+
+        $return_data = [
             "message" => "success",
-            "data" => $data
+            "data" => $clean_data
         ];
+
+        Storage::disk('local')->put('data.json', json_encode($return_data));
+
+        return $return_data;
     }
 }
