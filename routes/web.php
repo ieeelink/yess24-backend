@@ -22,7 +22,7 @@ Route::controller(BulkController::class)->group(function () {
 });
 
 Route::post('/api/test', function (Request $request) {
-    dd($request->all());
+    dd($request->header('referer'));
 });
 
 

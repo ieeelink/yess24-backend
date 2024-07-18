@@ -14,4 +14,14 @@ class Registrant extends Model
     {
         return $this->hasOne(MembershipId::class);
     }
+
+    public function ticket(): HasOne
+    {
+        return $this->hasOne(Ticket::class);
+    }
+
+    public function details(): HasOne
+    {
+        return $this->hasOne(Detail::class);
+    }
 }
