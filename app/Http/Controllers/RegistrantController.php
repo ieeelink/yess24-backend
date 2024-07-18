@@ -29,7 +29,7 @@ class RegistrantController extends Controller
         $clean_data["t_shirt_size"] = $data[4]["value"][0];
         $clean_data["food_preferences"] = $data[5]["value"][0];
 
-        if(isset($data[7]) && $data[6]["value"][0] != "Others"){
+        if(isset($data[7]) && $data[6]["value"][0] == "Others"){
             $clean_data["college"] = $data[7]["value"];
         }else{
             $clean_data["college"] = $data[6]["value"][0];
