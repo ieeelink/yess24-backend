@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\RegistrantController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,10 @@ Route::controller(BulkController::class)->group(function () {
     Route::get('/bulk/add', 'bulk_add');
 
     Route::post('/bulk', 'bulk_store');
+});
+
+Route::post('/api/test', function (Request $request) {
+    dd($request->all());
 });
 
 
