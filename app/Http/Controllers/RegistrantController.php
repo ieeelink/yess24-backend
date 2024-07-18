@@ -20,9 +20,24 @@ class RegistrantController extends Controller
     {
         $data = $request->all()["webhook"]["answers"];
 
+        $clean_data = [];
+
+        $clean_data["name"] = $data[0]["value"];
+        $clean_data["email"] = $data[1]["value"];
+        $clean_data["phone"] = $data[2]["value"];
+        $clean_data["gender"] = $data[3]["value"][0];
+        $clean_data["t_shirt_size"] = $data[4]["value"][0];
+        $clean_data["food_preferences"] = $data[5]["value"][0];
+
+        if(isset($data[7]) && $data[6]["value"][0] != "Others"){
+            $clean_data["college"] = $data[7]["value"];
+        }else{
+            $clean_data["college"] = $data[6]["value"][0];
+        }
+
         $return_data =  [
             "message" => "success",
-            "data" => $data
+            "data" => $clean_data
         ];
 
         Storage::disk('local')->put('data.json', json_encode($return_data));
