@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\RegistrantController;
 use App\Http\Middleware\CheckReferer;
@@ -22,9 +23,11 @@ Route::controller(BulkController::class)->group(function () {
     Route::post('/bulk', 'bulk_store');
 });
 
-Route::post('/api/test', function (Request $request) {
-    dd($request->header('referer'));
-})->middleware(CheckReferer::class);
+Route::controller(ApiController::class)
+    ->middleware(CheckReferer::class)
+    ->group(function () {
+    Route::post('/api/ticket' ,'get_ticket');
+});
 
 
 

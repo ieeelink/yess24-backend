@@ -16,7 +16,7 @@ class CheckReferer
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
 
-    protected $allowed = ['https://yess.ieee-link.org', 'https://test.ieee-link.org'];
+    protected $allowed = ['https://yess.ieee-link.org/', 'https://test.ieee-link.org/'];
 
     public function handle(Request $request, Closure $next): Response
     {
