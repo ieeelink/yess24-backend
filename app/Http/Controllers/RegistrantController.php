@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registrant;
+use App\Utils\Ticketing;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -64,6 +65,10 @@ class RegistrantController extends Controller
             'course' => $course,
         ]);
 
+        $registrant->tickets()->create([
+            'ticket_id' => Ticketing::generateTicketNumber($registrant->ticket_type)
+        ]);
+
         Storage::disk('local')->put('data.json', json_encode($return_data));
 
         return $return_data;
@@ -90,6 +95,10 @@ class RegistrantController extends Controller
         $registrant->details()->create([
             'year' => $year,
             'course' => $course,
+        ]);
+
+        $registrant->tickets()->create([
+            'ticket_id' => Ticketing::generateTicketNumber($registrant->ticket_type)
         ]);
 
         Storage::disk('local')->put('data.json', json_encode($return_data));
