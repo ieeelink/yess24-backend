@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\RegistrantController;
+use App\Http\Middleware\CheckReferer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ Route::controller(BulkController::class)->group(function () {
 
 Route::post('/api/test', function (Request $request) {
     dd($request->header('referer'));
-});
+})->middleware(CheckReferer::class);
 
 
 
