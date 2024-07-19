@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registrant;
+use App\Utils\PhoneNumber;
 use App\Utils\Ticketing;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class RegistrantController extends Controller
 
         $clean_data["name"] = $data[0]["value"];
         $clean_data["email"] = $data[1]["value"];
-        $clean_data["phone"] = $data[2]["value"];
+        $clean_data["phone"] = PhoneNumber::getNumber($data[2]["value"]);
         $clean_data["gender"] = $data[3]["value"][0];
         $clean_data["course"] = $data[4]["value"];
         $clean_data["year"] = $data[5]["value"][0];

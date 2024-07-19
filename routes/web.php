@@ -26,7 +26,7 @@ Route::controller(BulkController::class)->group(function () {
 Route::controller(ApiController::class)
     ->middleware(CheckReferer::class)
     ->group(function () {
-    Route::post('/api/ticket' ,'get_ticket');
+    Route::post('/api/tickets' ,'get_ticket');
 });
 
 

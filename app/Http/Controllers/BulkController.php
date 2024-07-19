@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registrant;
+use App\Utils\PhoneNumber;
 use App\Utils\Ticketing;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class BulkController extends Controller
         foreach ($chunkdata as $column) {
             $data["name"] = $column[1];
             $data["email"] = $column[2];
-            $data["phone"] = $column[3];
+            $data["phone"] = PhoneNumber::getNumber($column[3]);
             $data["college_name"] = $column[4];
             $data["gender"] = $column[7];
             $data["t_shirt_size"] = $column[8];
@@ -56,7 +57,7 @@ class BulkController extends Controller
             'csv_file' => 'required|file|mimes:csv',
             'ticket_type' => 'required',
             'is_ieee' => 'required',
-            'count' => 'required|int'
+            'count' => 'required|integer|numeric|min:1',
         ]);
 
         $file = $request->file('csv_file');
