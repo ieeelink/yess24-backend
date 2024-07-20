@@ -27,6 +27,7 @@ Route::controller(ApiController::class)
     ->middleware(CheckReferer::class)
     ->group(function () {
     Route::post('/api/tickets' ,'get_ticket');
+    Route::post('/api/{registrant}/add_membership_id', 'store_membership_id');
 });
 
 

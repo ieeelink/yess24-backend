@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registrant;
-use App\Models\Ticket;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\returnArgument;
+use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
@@ -16,8 +15,31 @@ class ApiController extends Controller
             "name" => $data['name'],
             "email" => $data['email'],
             "phone" => $data['phone'],
+            "is_ieee_member" => $data['is_ieee_member']
+        ];
+    }
+
+    public function get_response_data_with_ticket_id($data)
+    {
+        return [
+            "id" => $data['id'],
+            "name" => $data['name'],
+            "email" => $data['email'],
+            "phone" => $data['phone'],
             "is_ieee_member" => $data['is_ieee_member'],
-            "ticket_id" => $data['ticket']['ticket_id']
+            "ticket" => $data['ticket']['ticket_id']
+        ];
+    }
+
+    public function get_response_data_with_ticket($data)
+    {
+        return [
+            "id" => $data['id'],
+            "name" => $data['name'],
+            "email" => $data['email'],
+            "phone" => $data['phone'],
+            "is_ieee_member" => $data['is_ieee_member'],
+            "ticket" => $data['ticket']['ticket_id']
         ];
     }
     public function get_ticket(Request $request)
@@ -41,22 +63,58 @@ class ApiController extends Controller
             ],404);
         }
 
-        if($data->is_ieee_member){
-            if(! $data->membership_id){
-                $data = $data->toArray();
-
-                return response([
-                    "message" => "Please enter your IEEE Membership ID to validate your registration.",
-                    "data" => $this->get_response_data($data)
-                ], 404);
-            }
+        if($data->is_ieee_member && ! $data->membership_id){
+            return response([
+                "message" => "Membership ID not found",
+                "data" => $this->get_response_data_with_ticket_id($data)
+            ], 404);
         }
 
         $data = $data->toArray();
 
         return [
-            "message" => "Success",
-            "data" => $this->get_response_data($data)
+            "message" => "Successfully found registrant and his ticket",
+            "data" => $this->get_response_data_with_ticket($data)
         ];
+    }
+
+    public function store_membership_id(Registrant $registrant, Request $request)
+    {
+        if(! $registrant->is_ieee_member){
+            return response([
+                "message" => "Not a IEEE Member",
+                "data" => $this->get_response_data($registrant->toArray())
+            ], 401);
+        }
+
+        if($registrant->is_ieee_member && $registrant->membership_id){
+            return response([
+                "message" => "Membership ID already exists",
+                "data" => $this->get_response_data($registrant->toArray())
+            ], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'membership_id' => 'required|integer|unique:membership_ids,membership_id'
+        ]);
+
+        if($validator->fails()) {
+            return response([
+                "message" => "Membership ID already exists or not a numeric",
+                "data" => $request->all()
+            ], 404);
+        }
+
+        $membership_id = $validator->validated()['membership_id'];
+
+        $registrant->membership_id()->create([
+            'membership_id' => $membership_id
+        ]);
+
+        return [
+            "message" => "Successfully add membership id to registrant",
+            "data" => $this->get_response_data($registrant->toArray())
+        ];
+
     }
 }
