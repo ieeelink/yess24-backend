@@ -39,7 +39,6 @@ class ApiController extends Controller
             "email" => $data['email'],
             "phone" => $data['phone'],
             "is_ieee_member" => $data['is_ieee_member'],
-            "ticket" => $data['ticket']['ticket_id']
         ];
     }
     public function get_ticket(Request $request)

@@ -4,11 +4,14 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\RegistrantController;
 use App\Http\Middleware\CheckReferer;
-use Illuminate\Http\Request;
+use App\Utils\Ticket;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'image' => Ticket::generateTicket("hello")
+    ]);
 });
 
 Route::controller(RegistrantController::class)->group(function () {
