@@ -11,12 +11,13 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(ApiController::class)
     ->group(function () {
-        Route::post('/tickets' ,'get_ticket');
+        Route::post('/validate-user' ,'validate_user');
+        Route::post('/testing' , 'testing')->middleware('auth:sanctum');
         Route::post('/{registrant}/add_membership_id', 'store_membership_id');
     });
 
 Route::controller(RegistrantController::class)->group(function () {
-    Route::get('/data', 'data');
+    Route::get('/data', 'data')->name('login');
     Route::post('/neetoform/ieee', 'store_ieee');
     Route::post('/neetoform/non_ieee', 'store_non_ieee');
 });

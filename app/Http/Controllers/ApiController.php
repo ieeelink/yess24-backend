@@ -59,12 +59,10 @@ class ApiController extends Controller
             ], 404);
         }
 
-        $data = $data->toArray();
-
         return [
             "message" => "Successfully found registrant and his ticket",
-            "data" => $this->get_response_data($data),
-            "token" => "token"
+            "data" => $this->get_response_data($data->toArray()),
+            "token" => $data->createToken('validated')->plainTextToken
         ];
     }
 
@@ -106,5 +104,10 @@ class ApiController extends Controller
             "data" => $this->get_response_data($registrant->toArray())
         ];
 
+    }
+
+    public function testing(Request $request)
+    {
+        return $request->all();
     }
 }
