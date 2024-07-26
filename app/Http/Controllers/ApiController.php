@@ -19,7 +19,7 @@ class ApiController extends Controller
         ];
     }
 
-    public function get_response_data_with_ticket_id($data)
+    public function get_response_dat($data)
     {
         return [
             "id" => $data['id'],
@@ -31,17 +31,7 @@ class ApiController extends Controller
         ];
     }
 
-    public function get_response_data_with_ticket($data)
-    {
-        return [
-            "id" => $data['id'],
-            "name" => $data['name'],
-            "email" => $data['email'],
-            "phone" => $data['phone'],
-            "is_ieee_member" => $data['is_ieee_member'],
-        ];
-    }
-    public function get_ticket(Request $request)
+    public function validate_user(Request $request)
     {
         $validated = $request->validate([
             'email' => 'required|email',
@@ -58,14 +48,14 @@ class ApiController extends Controller
 
         if(! $data) {
             return response([
-                "message" => "No registrant with this email address or phone number."
+                "message" => "Registrant not found"
             ],404);
         }
 
         if($data->is_ieee_member && ! $data->membership_id){
             return response([
                 "message" => "Membership ID not found",
-                "data" => $this->get_response_data_with_ticket_id($data)
+                "data" => $this->get_response_data($data)
             ], 404);
         }
 
@@ -73,7 +63,8 @@ class ApiController extends Controller
 
         return [
             "message" => "Successfully found registrant and his ticket",
-            "data" => $this->get_response_data_with_ticket($data)
+            "data" => $this->get_response_data($data),
+            "token" => "token"
         ];
     }
 

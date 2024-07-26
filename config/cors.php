@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*','ieee-link.org', 'test.ieee-link.org'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
