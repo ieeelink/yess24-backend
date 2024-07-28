@@ -62,12 +62,14 @@ class ApiController extends Controller
         return [
             "message" => "Successfully found registrant and his ticket",
             "data" => $this->get_response_data($data->toArray()),
-            "token" => $data->createToken('validated')->plainTextToken
+            "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken
         ];
     }
 
-    public function store_membership_id(Registrant $registrant, Request $request)
+    public function store_membership_id(Request $request)
     {
+        $registrant =  $request->user();
+
         if(! $registrant->is_ieee_member){
             return response([
                 "message" => "Not a IEEE Member",
@@ -104,10 +106,5 @@ class ApiController extends Controller
             "data" => $this->get_response_data($registrant->toArray())
         ];
 
-    }
-
-    public function testing(Request $request)
-    {
-        return $request->all();
     }
 }
