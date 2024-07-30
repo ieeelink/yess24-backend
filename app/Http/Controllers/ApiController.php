@@ -19,18 +19,6 @@ class ApiController extends Controller
         ];
     }
 
-    public function get_response_dat($data)
-    {
-        return [
-            "id" => $data['id'],
-            "name" => $data['name'],
-            "email" => $data['email'],
-            "phone" => $data['phone'],
-            "is_ieee_member" => $data['is_ieee_member'],
-            "ticket" => $data['ticket']['ticket_id']
-        ];
-    }
-
     public function validate_user(Request $request)
     {
         $validated = $request->validate([
@@ -48,14 +36,15 @@ class ApiController extends Controller
 
         if(! $data) {
             return response([
-                "message" => "Registrant not found"
+                "message" => "Not found"
             ],404);
         }
 
         if($data->is_ieee_member && ! $data->membership_id){
             return response([
-                "message" => "Membership ID not found",
-                "data" => $this->get_response_data($data)
+                "message" => "ID not found",
+                "data" => $this->get_response_data($data->toArray()),
+                "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken,
             ], 404);
         }
 
@@ -89,7 +78,7 @@ class ApiController extends Controller
         ]);
 
         if($validator->fails()) {
-            return response([
+            return response()->json([
                 "message" => "Membership ID already exists or not a numeric",
                 "data" => $request->all()
             ], 404);
@@ -101,10 +90,35 @@ class ApiController extends Controller
             'membership_id' => $membership_id
         ]);
 
-        return [
+        return response()->json([
             "message" => "Successfully add membership id to registrant",
             "data" => $this->get_response_data($registrant->toArray())
-        ];
+        ], 201);
 
+    }
+
+    public function get_ticket(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if($validator->fails()) {
+            return response([
+                "message" => "Image not found"
+            ], 404);
+        }
+
+        $user =  $request->user();
+        $ticket_id = $request->user()->ticket()->ticket_id;
+
+        return response([
+            "message" => "Ticket Generated Successfully",
+            "data" => [
+                "ticket_id" => $ticket_id,
+                "user" => $user,
+            ],
+            "image" => $request->file('image')
+        ], 201);
     }
 }
