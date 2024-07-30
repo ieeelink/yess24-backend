@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\RegistrantController;
-use App\Http\Middleware\CheckReferer;
 use App\Utils\Ticket;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +17,8 @@ Route::controller(BulkController::class)->group(function () {
 
     Route::post('/bulk', 'bulk_store');
 });
+
+Route::get('/registrants', [RegistrantController::class, 'index']);
 
 
 
