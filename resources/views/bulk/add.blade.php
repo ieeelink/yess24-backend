@@ -1,4 +1,4 @@
-<x-layout>
+<x-dashboard>
     <div class="flex justify-center items-center min-h-svh">
         <form action="/bulk" method="post" enctype="multipart/form-data">
             @csrf
@@ -42,4 +42,4 @@
         </form>
     </div>
 
-</x-layout>
+</x-dashboard>
