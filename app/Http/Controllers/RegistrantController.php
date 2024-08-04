@@ -14,4 +14,10 @@ class RegistrantController extends Controller
             'registrants' => $registrants
         ]);
     }
+
+    public function show(Registrant $registrant){
+        return view('registrant.show', [
+            'registrant' => $registrant
+        ]);
+    }
 }

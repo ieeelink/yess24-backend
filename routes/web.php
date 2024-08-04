@@ -19,6 +19,6 @@ Route::controller(BulkController::class)->group(function () {
 });
 
 Route::get('/registrations', [RegistrantController::class, 'index']);
-
+Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
 
 
