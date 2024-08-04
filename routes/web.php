@@ -13,9 +13,9 @@ Route::get('/', function () {
 });
 
 Route::controller(BulkController::class)->group(function () {
-    Route::get('/bulk/add', 'bulk_add');
+    Route::get('/registrations/add', 'bulk_add');
 
-    Route::post('/bulk', 'bulk_store');
+    Route::post('/registrations', 'bulk_store');
 });
 
 Route::get('/registrants', [RegistrantController::class, 'index']);

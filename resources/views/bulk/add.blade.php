@@ -1,6 +1,6 @@
 <x-dashboard>
     <div class="flex justify-center items-center min-h-svh">
-        <form action="/bulk" method="post" enctype="multipart/form-data">
+        <form action="/registrations" method="post" enctype="multipart/form-data">
             @csrf
             <div class="w-[500px] space-y-8">
                 <div class="col-span-full">
