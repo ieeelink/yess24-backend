@@ -17,7 +17,9 @@ class RegistrantController extends Controller
 
     public function show(Registrant $registrant){
         return view('registrant.show', [
-            'registrant' => $registrant
+            'registrant' => $registrant,
+            'ticket_id' => $registrant->ticket->ticket_id,
+            'membership_id' => $registrant->membership_id->membership_id,
         ]);
     }
 }
