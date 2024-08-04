@@ -18,7 +18,7 @@ Route::controller(BulkController::class)->group(function () {
     Route::post('/registrations', 'bulk_store');
 });
 
-Route::get('/registrants', [RegistrantController::class, 'index']);
+Route::get('/registrations', [RegistrantController::class, 'index']);
 
 
 

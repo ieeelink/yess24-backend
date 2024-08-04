@@ -1,5 +1,5 @@
-<x-layout>
+<x-dashboard>
     <h1>
         Working
     </h1>
-</x-layout>
+</x-dashboard>
