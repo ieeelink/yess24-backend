@@ -58,20 +58,15 @@
                     <dt class="text-sm font-medium leading-6 text-gray-900">Events Registered</dt>
                     <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                <div class="flex w-0 flex-1 items-center">
-                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                        <span class="truncate font-medium">Event 1</span>
+                            @foreach($events as $event)
+                                <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                    <div class="flex w-0 flex-1 items-center">
+                                        <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                            <span class="truncate font-medium">{{ $event->name }} / </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                <div class="flex w-0 flex-1 items-center">
-                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                        <span class="truncate font-medium">Event 2</span>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </dd>
                 </div>

@@ -20,6 +20,7 @@ class RegistrantController extends Controller
             'registrant' => $registrant,
             'ticket_id' => $registrant->ticket->ticket_id,
             'membership_id' => $registrant->membership_id->membership_id,
+            'events' => $registrant->events
         ]);
     }
 }
