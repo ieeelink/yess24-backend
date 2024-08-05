@@ -23,5 +23,7 @@ Route::get('/registrations', [RegistrantController::class, 'index']);
 Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
 
 Route::get('/events', [EventController::class, 'index']);
+Route::get('/events/add', [EventController::class, 'add']);
+Route::post('/events', [EventController::class, 'store']);
 
 

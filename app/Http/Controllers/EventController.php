@@ -12,4 +12,12 @@ class EventController extends Controller
             'events' => Event::all()
         ]);
     }
+
+    public function add(){
+        return view('event.add');
+    }
+
+    public function store(Request $request){
+        return $request;
+    }
 }
