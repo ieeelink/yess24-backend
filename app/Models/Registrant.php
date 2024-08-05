@@ -27,7 +27,7 @@ class Registrant extends Model
         return $this->hasOne(Detail::class);
     }
 
-    public function event(): BelongsToMany
+    public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class);
     }

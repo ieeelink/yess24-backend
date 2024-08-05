@@ -24,7 +24,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Registrant::class);
             $table->foreignIdFor(Event::class);
-            $table->timestamps();
         });
     }
 
