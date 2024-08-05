@@ -87,7 +87,7 @@ class BulkController extends Controller
         }
         fclose($handle);
 
-        return $chunkdata;
+        return redirect('/registrations');
 
     }
 }

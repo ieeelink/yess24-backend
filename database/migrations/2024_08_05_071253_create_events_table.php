@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('registrant_event', function (Blueprint $table) {
+        Schema::create('event_registrant', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Registrant::class);
             $table->foreignIdFor(Event::class);
@@ -34,5 +34,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('events');
+        Schema::dropIfExists('event_registrant');
     }
 };
