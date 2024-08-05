@@ -18,6 +18,11 @@ class EventController extends Controller
     }
 
     public function store(Request $request){
-        return $request;
+        $validated = $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+        ]);
+        Event::create($validated);
+        return redirect('/events');
     }
 }
