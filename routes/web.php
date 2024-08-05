@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BulkController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegistrantController;
 use App\Utils\Ticket;
 use Illuminate\Support\Facades\Route;
@@ -20,5 +21,7 @@ Route::controller(BulkController::class)->group(function () {
 
 Route::get('/registrations', [RegistrantController::class, 'index']);
 Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
+
+Route::get('/events', [EventController::class, 'index']);
 
 
