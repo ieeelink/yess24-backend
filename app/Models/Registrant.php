@@ -22,10 +22,6 @@ class Registrant extends Model
         return $this->hasOne(Ticket::class);
     }
 
-    public function details(): HasOne
-    {
-        return $this->hasOne(Detail::class);
-    }
 
     public function events(): BelongsToMany
     {

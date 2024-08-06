@@ -54,17 +54,8 @@ class NeetoFormController extends Controller
             "data" => $clean_data
         ];
 
-        $year = $clean_data['year'];
-        $course = $clean_data['course'];
-
-        $clean_data = Arr::except($clean_data, ["year", "course"]);
-
         $registrant = Registrant::create($clean_data);
 
-        $registrant->details()->create([
-            'year' => $year,
-            'course' => $course,
-        ]);
 
         $registrant->tickets()->create([
             'ticket_id' => Ticketing::generateTicketNumber($registrant->ticket_type)
@@ -86,17 +77,7 @@ class NeetoFormController extends Controller
             "data" => $clean_data
         ];
 
-        $year = $clean_data['year'];
-        $course = $clean_data['course'];
-
-        $clean_data = Arr::except($clean_data, ["year", "course"]);
-
         $registrant = Registrant::create($clean_data);
-
-        $registrant->details()->create([
-            'year' => $year,
-            'course' => $course,
-        ]);
 
         $registrant->tickets()->create([
             'ticket_id' => Ticketing::generateTicketNumber($registrant->ticket_type)

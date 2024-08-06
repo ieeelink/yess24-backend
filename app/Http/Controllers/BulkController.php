@@ -18,6 +18,8 @@ class BulkController extends Controller
             $data["email"] = $column[2];
             $data["phone"] = PhoneNumber::getNumber($column[3]);
             $data["college_name"] = $column[4];
+            $data["year"] = $column[5];
+            $data["course"] = $column[6];
             $data["gender"] = $column[7];
             $data["t_shirt_size"] = $column[8];
             $data["food_preference"] = $column[9];
@@ -32,11 +34,6 @@ class BulkController extends Controller
                     'membership_id' => $column[10],
                 ]);
             }
-
-            $registrant->details()->create([
-                'year' => $column[5],
-                'course' => $column[6],
-            ]);
 
             $ticket_id = Ticketing::generateTicketNumber($ticket_type);
 
