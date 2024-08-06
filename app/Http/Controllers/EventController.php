@@ -21,6 +21,7 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'type' => 'required',
+            'description' => 'required',
         ]);
         Event::create($validated);
         return redirect('/events');
