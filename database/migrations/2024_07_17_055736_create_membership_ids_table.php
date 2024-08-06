@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('membership_ids', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Registrant::class);
+            $table->foreignIdFor(Registrant::class)->constrained()->cascadeOnDelete();
             $table->string("membership_id");
             $table->timestamps();
         });
