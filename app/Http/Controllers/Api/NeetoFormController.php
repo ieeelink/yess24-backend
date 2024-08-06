@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Registrant;
 use App\Utils\PhoneNumber;
 use App\Utils\Ticketing;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class NeetoFormController extends Controller
@@ -57,7 +57,7 @@ class NeetoFormController extends Controller
         $registrant = Registrant::create($clean_data);
 
 
-        $registrant->tickets()->create([
+        $registrant->ticket()->create([
             'ticket_id' => Ticketing::generateTicketNumber($registrant->ticket_type)
         ]);
 
@@ -79,7 +79,7 @@ class NeetoFormController extends Controller
 
         $registrant = Registrant::create($clean_data);
 
-        $registrant->tickets()->create([
+        $registrant->ticket()->create([
             'ticket_id' => Ticketing::generateTicketNumber($registrant->ticket_type)
         ]);
 

@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\NeetoFormController;
-use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Api\NeetoFormController;
+use App\Http\Controllers\Api\TicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
