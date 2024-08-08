@@ -26,5 +26,5 @@ Route::controller(NeetoFormController::class)
 });
 
 Route::post('/login', LoginController::class);
-Route::post('/events/{event}', AddMyEventController::class);
+Route::post('/events/{event}', AddMyEventController::class)->middleware('auth:sanctum');
 
