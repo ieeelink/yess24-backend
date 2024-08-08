@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AddMyEventController;
+use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\NeetoFormController;
 use App\Http\Controllers\Api\TicketController;
-use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,6 @@ Route::controller(NeetoFormController::class)
     Route::post('/neetoform/non-ieee', 'store_non_ieee');
 });
 
-Route::post('/login', [LoginController::class, 'store']);
+Route::post('/login', LoginController::class);
+Route::post('/events/{event}', AddMyEventController::class);
 

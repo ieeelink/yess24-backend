@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function store(Request $request)
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
     {
         $validated = $request->validate([
             'ticket_id' => 'required|exists:tickets,ticket_id',
@@ -29,6 +32,5 @@ class LoginController extends Controller
             'token' => $token,
             'data' => $ticket->registrant,
         ], 201);
-
     }
 }
