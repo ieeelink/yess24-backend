@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Registrant;
+use App\Utils\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -111,15 +112,21 @@ class TicketController extends Controller
         }
 
         $user =  $request->user();
-        $ticket_id = $request->user()->ticket()->ticket_id;
+        $ticket_id = $request->user()->ticket->ticket_id;
 
-        return response([
-            "message" => "Ticket Generated Successfully",
-            "data" => [
-                "ticket_id" => $ticket_id,
-                "user" => $user,
-            ],
-            "image" => $request->file('image')
-        ], 201);
+//        return response([
+//            "message" => "Ticket Generated Successfully",
+//            "data" => [
+//                "ticket_id" => $ticket_id,
+//                "user" => $user,
+//            ],
+//            "image" => Ticket::generateTicket($ticket_id, $request->file('image'))
+//        ], 201);
+
+        return view('welcome', [
+            'ticket_id' => $ticket_id,
+            'image' => Ticket::generateTicket($ticket_id, $request->file('image')),
+        ]);
+
     }
 }

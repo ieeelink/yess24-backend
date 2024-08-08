@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use function PHPUnit\Framework\isFalse;
 
 class LoginController extends Controller
 {
@@ -27,7 +25,10 @@ class LoginController extends Controller
 
         $token = $ticket->registrant->createToken('loggedIn', ['*'], now()->addHour() )->plainTextToken;
 
-        return response(['token' => $token], 200);
+        return response([
+            'token' => $token,
+            'data' => $ticket->registrant,
+        ], 201);
 
     }
 }
