@@ -20,7 +20,7 @@ class AddMyEventController extends Controller
 
         // Checks for if the registrant as registered the event already
         foreach ($registrant_events as $registrant_event) {
-            if($registrant_event->id === $event->id) {
+            if($registrant_event->type === $event->type) {
                 return response()->json([
                     "message" => sprintf("You have already registered for %s", $event->name)
                 ], 405);
@@ -28,6 +28,12 @@ class AddMyEventController extends Controller
         }
 
         // Checks if the slot is filled
+        if(! $event->slot)
+        {
+            return response()->json([
+                "message" => "Slots allotted for the event are filled"
+            ], 405);
+        }
 
         $registrant->events()->attach($event);
 
