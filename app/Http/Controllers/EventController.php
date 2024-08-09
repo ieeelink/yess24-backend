@@ -22,6 +22,7 @@ class EventController extends Controller
             'name' => 'required',
             'type' => 'required',
             'description' => 'required',
+            'slot' => 'required|int',
         ]);
         Event::create($validated);
         return redirect('/events');
