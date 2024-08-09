@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->text('description');
+            $table->integer('slot');
             $table->timestamps();
         });
 

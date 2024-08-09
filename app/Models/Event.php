@@ -10,7 +10,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    public function registrant(): BelongsToMany
+    public function registrants(): BelongsToMany
     {
         return $this->belongsToMany(Registrant::class);
     }
