@@ -9,8 +9,8 @@ class Group extends Model
 {
     use HasFactory;
 
-    public function registrants()
+    public function participants()
     {
-        return $this->hasMany(Registrant::class);
+        return $this->hasMany(Participant::class);
     }
 }
