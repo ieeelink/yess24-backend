@@ -8,6 +8,7 @@ use App\Models\Participant;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use TheSeer\Tokenizer\Exception;
 
 class MentoringSessionController extends Controller
 {
@@ -41,7 +42,7 @@ class MentoringSessionController extends Controller
                 $registrant = $ticket->registrant;
 
                 // Add Event to Event Registrant Table
-                $registrant->events()->attach($event);
+                $registrant->event($event);
 
                 // Making Participant
                 $participant = Participant::create([
@@ -51,9 +52,12 @@ class MentoringSessionController extends Controller
             }
 
             DB::commit();
-        } catch (\Error $error)
+        } catch (\Exception $exception)
         {
             DB::rollBack();
+            return response()->json([
+                "message" => $exception->getLine() == 43 ? "Registrant Not Found" : $exception->getMessage()
+            ], 405);
         }
 
 

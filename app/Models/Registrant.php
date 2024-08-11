@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,22 @@ class Registrant extends Model
     public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function event($event)
+    {
+        $registrants_events = $this->events;
+        foreach ($registrants_events as $registrants_event)
+        {
+            if ($registrants_event->type === $event->type)
+            {
+                throw new Exception('Registrant already registered for ' . $registrants_event->type);
+            }
+        }
+        $this->events()->save($event);
     }
 
     public function participant(): HasOne

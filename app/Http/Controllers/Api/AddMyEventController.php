@@ -19,13 +19,13 @@ class AddMyEventController extends Controller
         $registrant_events =  $registrant->events;
 
         // Checks for if the registrant as registered the event already
-        foreach ($registrant_events as $registrant_event) {
-            if($registrant_event->type === $event->type) {
-                return response()->json([
-                    "message" => sprintf("You have already registered for %s", $event->name)
-                ], 405);
-            }
-        }
+//        foreach ($registrant_events as $registrant_event) {
+//            if($registrant_event->type ===  $event->type) {
+//                return response()->json([
+//                    "message" => sprintf("You have already registered for %s", $event->name)
+//                ], 405);
+//            }
+//        }
 
         // Checks if the slot is filled
         if(! $event->slot)
@@ -35,7 +35,17 @@ class AddMyEventController extends Controller
             ], 405);
         }
 
-        $registrant->events()->attach($event);
+        try
+        {
+            $registrant->event($event);
+
+        }catch (\Exception $exception)
+        {
+            return response()->json([
+                "message" => sprintf("You have already registered for %s", $event->name)
+            ], 405);
+        }
+
 
         return response()->json([
             "message" => sprintf("%s has successfully registered for %s", $registrant->name, $event->name)
