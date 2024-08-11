@@ -28,8 +28,8 @@
                 </div>
                 @if($registrant->is_ieee_member)
                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt class="text-sm font-medium leading-6 text-gray-900">Membership ID</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $membership_id ?? '' }}</dd>
+                        <dt class="text-sm font-medium leading-6 {{ $membership_id ? 'text-gray-900' : 'text-red-500' }}">Membership ID</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $membership_id }}</dd>
                     </div>
                 @endif
             </dl>
