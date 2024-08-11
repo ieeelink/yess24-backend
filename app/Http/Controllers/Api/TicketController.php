@@ -7,17 +7,19 @@ use App\Models\Registrant;
 use App\Utils\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\False_;
 
 class TicketController extends Controller
 {
-    public function get_response_data($data)
+    public function get_response_data($data, $id)
     {
         return [
             "id" => $data['id'],
             "name" => $data['name'],
             "email" => $data['email'],
             "phone" => $data['phone'],
-            "is_ieee_member" => $data['is_ieee_member']
+            "is_ieee_member" => $data['is_ieee_member'],
+            "membership_id" => $id,
         ];
     }
 
@@ -38,21 +40,23 @@ class TicketController extends Controller
 
         if(! $data) {
             return response([
-                "message" => "Not found"
+                "message" => "User not found, please enter your valid credentials."
             ],404);
         }
 
         if($data->is_ieee_member && ! $data->membership_id){
             return response([
-                "message" => "ID not found",
-                "data" => $this->get_response_data($data->toArray()),
+                "message" => "Membership ID not found",
+                "data" => $this->get_response_data($data->toArray(), null),
                 "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken,
             ], 404);
         }
 
+        $membership_id = $data->is_ieee_member && $data->membership_id ? $data->membership_id->membership_id : null;
+
         return [
             "message" => "Successfully found registrant and his ticket",
-            "data" => $this->get_response_data($data->toArray()),
+            "data" => $this->get_response_data($data->toArray(), $membership_id),
             "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken
         ];
     }
@@ -61,40 +65,31 @@ class TicketController extends Controller
     {
         $registrant =  $request->user();
 
+        $validated = $request->validate([
+            'membership_id' => 'required|integer|unique:membership_ids,membership_id'
+        ]);
+
         if(! $registrant->is_ieee_member){
             return response([
                 "message" => "Not a IEEE Member",
-                "data" => $this->get_response_data($registrant->toArray())
+                "data" => $this->get_response_data($registrant->toArray(), null)
             ], 401);
         }
 
         if($registrant->is_ieee_member && $registrant->membership_id){
             return response([
                 "message" => "Membership ID already exists",
-                "data" => $this->get_response_data($registrant->toArray())
+                "data" => $this->get_response_data($registrant->toArray(), $registrant->membership_id->membership_id),
             ], 401);
         }
 
-        $validator = Validator::make($request->all(), [
-            'membership_id' => 'required|integer|unique:membership_ids,membership_id'
-        ]);
-
-        if($validator->fails()) {
-            return response()->json([
-                "message" => "Membership ID already exists or not a numeric",
-                "data" => $request->all()
-            ], 404);
-        }
-
-        $membership_id = $validator->validated()['membership_id'];
-
         $registrant->membership_id()->create([
-            'membership_id' => $membership_id
+            'membership_id' => $validated['membership_id']
         ]);
 
         return response()->json([
-            "message" => "Successfully add membership id to registrant",
-            "data" => $this->get_response_data($registrant->toArray())
+            "message" => "Successfully added membership id to " . $registrant->name,
+            "data" => $this->get_response_data($registrant->toArray(), $validated['membership_id']),
         ], 201);
 
     }
