@@ -96,32 +96,17 @@ class TicketController extends Controller
 
     public function get_ticket(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
 
-        if($validator->fails()) {
-            return response([
-                "message" => "Image not found"
-            ], 404);
-        }
+        $data = [
+            "name" => $request->user()->name,
+            "ticket_id" => $request->user()->ticket->ticket_id,
+        ];
 
-        $user =  $request->user();
-        $ticket_id = $request->user()->ticket->ticket_id;
-
-//        return response([
-//            "message" => "Ticket Generated Successfully",
-//            "data" => [
-//                "ticket_id" => $ticket_id,
-//                "user" => $user,
-//            ],
-//            "image" => Ticket::generateTicket($ticket_id, $request->file('image'))
-//        ], 201);
-
-        return view('welcome', [
-            'ticket_id' => $ticket_id,
-            'image' => Ticket::generateTicket($ticket_id, $request->file('image')),
-        ]);
+        return response([
+            "message" => "Ticket Generated Successfully",
+            "data" => $data,
+            "image" => Ticket::generateTicket($data, $request->user()->ticket_type)
+        ], 201);
 
     }
 }
