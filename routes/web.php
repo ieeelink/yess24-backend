@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome', [
-        'image' => Ticket::generateTicket("hello")
+        'image' => Ticket::generateTicket([
+            "name" => "Benison Abraham",
+            "ticket_id" => "YESS0534"
+        ], "")
     ]);
 });
 
