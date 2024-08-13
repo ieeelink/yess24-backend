@@ -46,8 +46,8 @@ class Registrant extends Model
         $this->events()->save($event);
     }
 
-    public function participant(): HasOne
+    public function group_member(): HasOne
     {
-        return $this->hasOne(Participant::class);
+        return $this->hasOne(GroupMember::class);
     }
 }

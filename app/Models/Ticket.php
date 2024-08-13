@@ -9,11 +9,6 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    public static function generateTicket()
-    {
-
-    }
-
     public function registrant(){
         return $this->belongsTo(Registrant::class);
     }
