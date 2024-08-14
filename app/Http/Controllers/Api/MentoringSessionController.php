@@ -4,22 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\Participant;
+use App\Models\GroupMember;
 use App\Models\Ticket;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use TheSeer\Tokenizer\Exception;
 
 class MentoringSessionController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Event $event)
+    public function __invoke(Request $request, Event $event): JsonResponse
     {
         $validated = $request->validate([
-            'registrant_count' => 'required|integer|min:2',
-            'registrant_array' => 'required|array'
+            'registrant_count' => 'required|integer|min:1',
+            'registrant_array' => 'required|array|min:1',
         ]);
 
         if($event->slot < $validated['registrant_count']) {
@@ -28,14 +28,60 @@ class MentoringSessionController extends Controller
             ], 405);
         }
 
+        if(count($validated['registrant_array']) == 0)
+        {
+            return response()->json([
+                'message' => 'The registrants array must have at least one registrant'
+            ], 405);
+        }
 
+        $count = count($validated['registrant_array']);
+
+
+        if($count == 1)
+        {
+            $this->add_one_participant($validated['registrant_array'][0], $event);
+        }
+
+        if($count != 1)
+        {
+            $res = $this->add_many_participant($validated['registrant_array'], $event);
+            if($res)
+            {
+                if(get_class($res) == "Illuminate\Http\JsonResponse")
+                {
+                    return $res;
+                }
+            }
+
+        }
+
+        return response()->json([
+            'message' => 'The registrants added to mentoring session'
+        ],201);
+    }
+
+    private function add_one_participant($ticket_id, $event): void
+    {
+        $ticket = Ticket::query()->where('ticket_id', $ticket_id)->first();
+
+        $registrant = $ticket->registrant;
+
+        $registrant->event($event);
+
+        $event->slot--;
+        $event->save();
+    }
+
+    public function add_many_participant($registrant_array, $event): JsonResponse|string
+    {
         DB::beginTransaction();
         // Create a Group
         try {
+
             $group = $event->groups()->create();
 
-
-            foreach ($validated['registrant_array'] as $ticket_id)
+            foreach ($registrant_array as $ticket_id)
             {
                 $ticket = Ticket::query()->where('ticket_id', $ticket_id)->first();
 
@@ -44,8 +90,11 @@ class MentoringSessionController extends Controller
                 // Add Event to Event Registrant Table
                 $registrant->event($event);
 
+                $event->slot--;
+                $event->save();
+
                 // Making Participant
-                $participant = Participant::create([
+                $group_members = GroupMember::create([
                     'registrant_id' => $registrant->id,
                     'group_id' => $group->id,
                 ]);
@@ -56,13 +105,10 @@ class MentoringSessionController extends Controller
         {
             DB::rollBack();
             return response()->json([
-                "message" => $exception->getLine() == 43 ? "Registrant Not Found" : $exception->getMessage()
+                "message" => $exception->getLine() == 84 ? "Registrant Not Found" : $exception->getMessage()
             ], 405);
         }
 
-
-        return response()->json([
-            'message' => 'The registrants added to mentoring session'
-        ],201);
+        return false;
     }
 }
