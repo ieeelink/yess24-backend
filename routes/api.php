@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
 use App\Http\Controllers\Api\NeetoFormController;
 use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\GetNoOfSlots;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::post('/login', LoginController::class);
 
 // Mentoring Session api.
 Route::post('/events/mentoring-session/{event}', MentoringSessionController::class)->middleware('auth:sanctum');
+
+Route::get('/events/{event}', GetNoOfSlots::class);
 
 // Event Registration api.
 Route::post('/events/{event}', AddMyEventController::class)->middleware('auth:sanctum');
