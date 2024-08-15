@@ -11,8 +11,8 @@
                         </div>
                     </div>
                     <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                        <p class="text-sm leading-6 text-gray-900">{{ $event->college_name  }} / {{ $event->ticket_type }}</p>
-                        <a href="/registrations/{{ $event->id }}" class="text-blue-300 hover:text-blue-500">View Details</a>
+                        <p class="text-sm leading-6 text-gray-900">{{route('events.index')."/".$event->id}}</p>
+                        <a href="/events/{{ $event->id }}" class="text-blue-300 hover:text-blue-500">View Details</a>
                     </div>
                 </li>
             @endforeach
