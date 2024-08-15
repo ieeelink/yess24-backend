@@ -34,7 +34,7 @@ Route::controller(NeetoFormController::class)
 Route::post('/login', LoginController::class);
 
 // Mentoring Session api.
-Route::post('/events/mentoring-session/{event}', MentoringSessionController::class);//->middleware('auth:sanctum');
+Route::post('/events/mentoring-session/{event}', MentoringSessionController::class)->middleware('auth:sanctum');
 
 // Event Registration api.
 Route::post('/events/{event}', AddMyEventController::class)->middleware('auth:sanctum');

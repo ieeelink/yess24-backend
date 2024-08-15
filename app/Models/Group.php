@@ -9,9 +9,9 @@ class Group extends Model
 {
     use HasFactory;
 
-    public function participants()
+    public function group_members()
     {
-        return $this->hasMany(Participant::class);
+        return $this->hasMany(GroupMember::class);
     }
 
     public function event()

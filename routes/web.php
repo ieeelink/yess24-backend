@@ -25,8 +25,9 @@ Route::controller(BulkController::class)->group(function () {
 Route::get('/registrations', [RegistrantController::class, 'index']);
 Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
 
-Route::get('/events', [EventController::class, 'index']);
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/add', [EventController::class, 'add']);
+Route::get('/events/{event}', [EventController::class, 'show']);
 Route::post('/events', [EventController::class, 'store']);
 
 

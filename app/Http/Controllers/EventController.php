@@ -17,6 +17,11 @@ class EventController extends Controller
         return view('event.add');
     }
 
+    public function show(Event $event)
+    {
+        return view('event.show', ['registrants' => $event->registrants()->with('group_member')->get()]);
+    }
+
     public function store(Request $request){
         $validated = $request->validate([
             'name' => 'required',
