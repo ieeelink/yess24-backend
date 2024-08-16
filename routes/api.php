@@ -37,7 +37,7 @@ Route::post('/login', LoginController::class);
 // Mentoring Session api.
 Route::post('/events/mentoring-session/{event}', MentoringSessionController::class)->middleware('auth:sanctum');
 
-Route::get('/events', GetAllEvents::class);
+Route::get('/events/mentoring-session', GetAllEvents::class);
 
 // Event Registration api.
 Route::post('/events/{event}', AddMyEventController::class)->middleware('auth:sanctum');
