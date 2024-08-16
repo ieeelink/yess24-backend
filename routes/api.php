@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AddMyEventController;
-use App\Http\Controllers\Api\GetNoOfSlots;
+use App\Http\Controllers\Api\GetAllEvents;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
 use App\Http\Controllers\Api\NeetoFormController;
@@ -37,7 +37,7 @@ Route::post('/login', LoginController::class);
 // Mentoring Session api.
 Route::post('/events/mentoring-session/{event}', MentoringSessionController::class)->middleware('auth:sanctum');
 
-Route::get('/events/{event}', GetNoOfSlots::class);
+Route::get('/events', GetAllEvents::class);
 
 // Event Registration api.
 Route::post('/events/{event}', AddMyEventController::class)->middleware('auth:sanctum');

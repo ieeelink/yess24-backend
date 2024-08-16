@@ -31,6 +31,7 @@ class LoginController extends Controller
         return response([
             'token' => $token,
             'data' => $ticket->registrant,
+            'ticket_id' => $ticket->ticket_id
         ], 201);
     }
 }
