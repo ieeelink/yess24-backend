@@ -16,18 +16,24 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::controller(BulkController::class)->group(function () {
-    Route::get('/registrations/add', 'bulk_add');
+//Route::login('/login', )
 
-    Route::post('/registrations', 'bulk_store');
+Route::middleware('auth')->group(function () {
+    Route::controller(BulkController::class)->group(function () {
+        Route::get('/registrations/add', 'bulk_add');
+
+        Route::post('/registrations', 'bulk_store');
+    });
+
+    Route::get('/registrations', [RegistrantController::class, 'index']);
+    Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
+
+    Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/add', [EventController::class, 'add']);
+    Route::get('/events/{event}', [EventController::class, 'show']);
+    Route::post('/events', [EventController::class, 'store']);
 });
 
-Route::get('/registrations', [RegistrantController::class, 'index']);
-Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
 
-Route::get('/events', [EventController::class, 'index']);
-Route::get('/events/add', [EventController::class, 'add']);
-Route::get('/events/{event}', [EventController::class, 'show']);
-Route::post('/events', [EventController::class, 'store']);
 
 
