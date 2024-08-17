@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegistrantController;
@@ -16,7 +17,7 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-//Route::login('/login', )
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::controller(BulkController::class)->group(function () {
