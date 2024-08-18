@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 
+Route::post('/login', [AuthController::class, 'store']);
+
 Route::middleware('auth')->group(function () {
     Route::controller(BulkController::class)->group(function () {
         Route::get('/registrations/add', 'bulk_add');
@@ -26,7 +28,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/registrations', 'bulk_store');
     });
 
-    Route::get('/registrations', [RegistrantController::class, 'index']);
+    Route::get('/registrations', [RegistrantController::class, 'index'])->name('registrations');
     Route::get('/registrations/{registrant}', [RegistrantController::class, 'show']);
 
     Route::get('/events', [EventController::class, 'index']);
