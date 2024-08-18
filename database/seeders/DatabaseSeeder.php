@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'IEEE User',
-            'email' => 'benison@example.com',
-            'password' => Hash::make('BENison2003'),
+            'email' => 'link@example.com',
+            'password' => Hash::make('IEEElink2024'),
         ]);
     }
 }

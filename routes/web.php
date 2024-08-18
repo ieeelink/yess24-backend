@@ -17,9 +17,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 
-Route::post('/login', [AuthController::class, 'store']);
+Route::post('/login', [AuthController::class, 'store'])->middleware('guest');
 
 Route::middleware('auth')->group(function () {
     Route::controller(BulkController::class)->group(function () {
