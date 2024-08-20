@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\GroupMember;
-use App\Models\Ticket;
+use App\Models\Registrant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,11 +61,9 @@ class MentoringSessionController extends Controller
         ],201);
     }
 
-    private function add_one_participant($ticket_id, $event): void
+    private function add_one_participant($email, $event): void
     {
-        $ticket = Ticket::query()->where('ticket_id', $ticket_id)->first();
-
-        $registrant = $ticket->registrant;
+        $registrant = Registrant::query()->where('email', $email)->first();
 
         $registrant->event($event);
 
@@ -81,11 +79,9 @@ class MentoringSessionController extends Controller
 
             $group = $event->groups()->create();
 
-            foreach ($registrant_array as $ticket_id)
+            foreach ($registrant_array as $email)
             {
-                $ticket = Ticket::query()->where('ticket_id', $ticket_id)->first();
-
-                $registrant = $ticket->registrant;
+                $registrant = Registrant::query()->where('email', $email)->first();
 
                 // Add Event to Event Registrant Table
                 $registrant->event($event);
@@ -105,7 +101,7 @@ class MentoringSessionController extends Controller
         {
             DB::rollBack();
             return response()->json([
-                "message" => $exception->getLine() == 84 ? "Registrant Not Found" : $exception->getMessage()
+                "message" => $exception->getLine() == 88 ? "Registrant Not Found" : $exception->getMessage()
             ], 405);
         }
 
