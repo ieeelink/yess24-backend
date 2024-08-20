@@ -18,15 +18,12 @@ class BulkController extends Controller
             $data["email"] = $column[2];
             $data["phone"] = PhoneNumber::getNumber($column[3]);
             $data["college_name"] = $column[4];
-            $data["year"] = $column[5];
-            $data["course"] = $column[6];
-            $data["gender"] = $column[7];
-            $data["t_shirt_size"] = $column[8];
-            $data["food_preference"] = $column[9];
             $data["is_ieee_member"] = $is_ieee;
             $data["ticket_type"] = $ticket_type;
 
             $registrant = Registrant::create($data);
+
+            $registrant->checks->create();
 
 
             if($is_ieee && $column[10] !== "NA"){
