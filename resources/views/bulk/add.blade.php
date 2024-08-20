@@ -1,4 +1,9 @@
 <x-dashboard>
+    <p>
+        @error('csv_file')
+            {{$message}}
+        @enderror
+    </p>
     <div class="flex justify-center items-center max-h-svh">
         <form action="/registrations" method="post" enctype="multipart/form-data">
             @csrf

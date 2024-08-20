@@ -23,12 +23,11 @@ class BulkController extends Controller
 
             $registrant = Registrant::create($data);
 
-            $registrant->checks->create();
+            $registrant->checks()->create();
 
-
-            if($is_ieee && $column[10] !== "NA"){
+            if($is_ieee && $column[5] !== ""){
                 $registrant->membership_id()->create([
-                    'membership_id' => $column[10],
+                    'membership_id' => $column[5],
                 ]);
             }
 
