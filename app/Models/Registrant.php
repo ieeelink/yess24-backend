@@ -5,7 +5,6 @@ namespace App\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
@@ -49,5 +48,20 @@ class Registrant extends Model
     public function group_member(): HasOne
     {
         return $this->hasOne(GroupMember::class);
+    }
+
+    public function checks()
+    {
+        return $this->hasOne(Check::class);
+    }
+
+    public function isValidated()
+    {
+        return $this->checks->isValidated;
+    }
+
+    public function isAttending()
+    {
+        return $this->checks->isAttending;
     }
 }
