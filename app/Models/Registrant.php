@@ -42,7 +42,7 @@ class Registrant extends Model
                 throw new Exception('Registrant already registered for ' . $registrants_event->type);
             }
         }
-        $this->events()->save($event);
+        $this->events()->attach($event);
     }
 
     public function group_member(): HasOne

@@ -9,6 +9,8 @@ use App\Models\Registrant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\False_;
+use phpDocumentor\Reflection\Types\Void_;
 
 class MentoringSessionController extends Controller
 {
@@ -40,7 +42,14 @@ class MentoringSessionController extends Controller
 
         if($count == 1)
         {
-            $this->add_one_participant($validated['registrant_array'][0], $event);
+            $res = $this->add_one_participant($validated['registrant_array'][0], $event);
+            if($res)
+            {
+                if(get_class($res) == "Illuminate\Http\JsonResponse")
+                {
+                    return $res;
+                }
+            }
         }
 
         if($count != 1)
@@ -61,17 +70,26 @@ class MentoringSessionController extends Controller
         ],201);
     }
 
-    private function add_one_participant($email, $event): void
+    private function add_one_participant($email, $event): JsonResponse|bool
     {
         $registrant = Registrant::query()->where('email', $email)->first();
+
+        if($registrant == null)
+        {
+            return response()->json([
+               "message" => "The registrant not found, enter your registered email address"
+            ], 405);
+        }
 
         $registrant->event($event);
 
         $event->slot--;
         $event->save();
+
+        return false;
     }
 
-    public function add_many_participant($registrant_array, $event): JsonResponse|string
+    public function add_many_participant($registrant_array, $event): JsonResponse|bool
     {
         DB::beginTransaction();
         // Create a Group
