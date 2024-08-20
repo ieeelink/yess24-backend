@@ -15,7 +15,7 @@ class BulkController extends Controller
 
         foreach ($chunkdata as $column) {
             $data["name"] = $column[1];
-            $data["email"] = $column[2];
+            $data["email"] = strtolower($column[2]) ;
             $data["phone"] = PhoneNumber::getNumber($column[3]);
             $data["college_name"] = $column[4];
             $data["is_ieee_member"] = $is_ieee;
