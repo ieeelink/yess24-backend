@@ -16,12 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
-            $table->string('gender');
             $table->string('college_name');
-            $table->string('year')->nullable();
-            $table->string('course')->nullable();
-            $table->string('t_shirt_size');
-            $table->string('food_preference');
             $table->boolean('is_ieee_member');
             $table->string('ticket_type');
             $table->timestamps();
