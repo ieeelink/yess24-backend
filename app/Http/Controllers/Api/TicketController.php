@@ -90,6 +90,7 @@ class TicketController extends Controller
         return response()->json([
             "message" => "Successfully added membership id to " . $registrant->name,
             "data" => $this->get_response_data($registrant->toArray(), $validated['membership_id']),
+            "isValidated" => (bool) $registrant->checks->isValidated,
         ], 201);
 
     }
@@ -101,6 +102,17 @@ class TicketController extends Controller
             "name" => $request->user()->name,
             "ticket_id" => $request->user()->ticket->ticket_id,
         ];
+
+        if(! $request->user()->checks->isValidated)
+        {
+            return response([
+                "message" => "Your IEEE Membership is not yet validated, check after few hours",
+                "data" => $data,
+                "image" => Ticket::generateTicket($data, $request->user()->ticket_type),
+                "isValidated" => false,
+            ], 201);
+
+        }
 
         return response([
             "message" => "Ticket Generated Successfully",
