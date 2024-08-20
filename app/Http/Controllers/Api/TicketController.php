@@ -55,9 +55,10 @@ class TicketController extends Controller
         $membership_id = $data->is_ieee_member && $data->membership_id ? $data->membership_id->membership_id : null;
 
         return [
-            "message" => "Successfully found registrant and his ticket",
+            "message" => "Successfully found registrant and membership id send for validation",
             "data" => $this->get_response_data($data->toArray(), $membership_id),
-            "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken
+            "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken,
+            "isValidated" => $data->checks->isValidated,
         ];
     }
 
@@ -108,7 +109,6 @@ class TicketController extends Controller
             return response([
                 "message" => "Your IEEE Membership is not yet validated, check after few hours",
                 "data" => $data,
-                "image" => Ticket::generateTicket($data, $request->user()->ticket_type),
                 "isValidated" => false,
             ], 201);
 
@@ -117,7 +117,8 @@ class TicketController extends Controller
         return response([
             "message" => "Ticket Generated Successfully",
             "data" => $data,
-            "image" => Ticket::generateTicket($data, $request->user()->ticket_type)
+            "image" => Ticket::generateTicket($data, $request->user()->ticket_type),
+            "isValidated" => true
         ], 201);
 
     }
