@@ -67,7 +67,7 @@ class TicketController extends Controller
 
         $message = "Successfully found registrant and membership id send for validation";
 
-        if($data->checks->isValidated){
+        if($data->checks->isValidated || ! $data->is_ieee_member){
             $message = "Successfully found registrant please download your ticket";
         }
 
@@ -75,7 +75,7 @@ class TicketController extends Controller
             "message" => $message,
             "data" => $this->get_response_data($data->toArray(), $membership_id),
             "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken,
-            "isValidated" => $data->checks->isValidated,
+            "isValidated" => $data->is_ieee_member ? $data->checks->isValidated : true,
         ];
     }
 
