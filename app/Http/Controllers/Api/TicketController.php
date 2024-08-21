@@ -121,7 +121,7 @@ class TicketController extends Controller
             "ticket_id" => $request->user()->ticket->ticket_id,
         ];
 
-        if($request->user()->ticket->ticket_type === "Contributor Ticket")
+        if($request->user()->ticket_type === "Contributor Ticket")
         {
             return response([
                 "message" => "Ticket Generated Successfully",
