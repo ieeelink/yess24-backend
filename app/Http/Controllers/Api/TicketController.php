@@ -44,6 +44,17 @@ class TicketController extends Controller
             ],404);
         }
 
+        if($data->ticket_type == "Contributor Ticket")
+        {
+            $membership_id = 12345789;
+            return response()->json([
+                "message" => "Successfully found registrant please download your ticket",
+                "data" => $this->get_response_data($data->toArray(), $membership_id),
+                "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken,
+                "isValidated" => true,
+            ]);
+        }
+
         if($data->is_ieee_member && ! $data->membership_id){
             return response([
                 "message" => "Membership ID not found",
@@ -54,8 +65,14 @@ class TicketController extends Controller
 
         $membership_id = $data->is_ieee_member && $data->membership_id ? $data->membership_id->membership_id : null;
 
+        $message = "Successfully found registrant and membership id send for validation";
+
+        if($data->checks->isValidated){
+            $message = "Successfully found registrant please download your ticket";
+        }
+
         return [
-            "message" => "Successfully found registrant and membership id send for validation",
+            "message" => $message,
             "data" => $this->get_response_data($data->toArray(), $membership_id),
             "token" => $data->createToken('validated', ['*'], now()->addHour() )->plainTextToken,
             "isValidated" => $data->checks->isValidated,
@@ -103,6 +120,16 @@ class TicketController extends Controller
             "name" => $request->user()->name,
             "ticket_id" => $request->user()->ticket->ticket_id,
         ];
+
+        if($request->user()->ticket->ticket_type == "Contributor Ticket")
+        {
+            return response([
+                "message" => "Ticket Generated Successfully",
+                "data" => $data,
+                "image" => Ticket::generateTicket($data, $request->user()->ticket_type),
+                "isValidated" => true
+            ], 201);
+        }
 
         if(! $request->user()->checks->isValidated)
         {
