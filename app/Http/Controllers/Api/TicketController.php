@@ -131,6 +131,16 @@ class TicketController extends Controller
             ], 201);
         }
 
+        if(! $request->user()->is_ieee_member)
+        {
+            return response([
+                "message" => "Ticket Generated Successfully",
+                "data" => $data,
+                "image" => Ticket::generateTicket($data, $request->user()->ticket_type),
+                "isValidated" => true
+            ], 201);
+        }
+
         if(! $request->user()->checks->isValidated)
         {
             return response([
