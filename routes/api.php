@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\GetAllEvents;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
 use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\GetUserDetailsWithAllChecks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,8 @@ Route::post('/events/mentoring-session/{event}', MentoringSessionController::cla
 
 // Get All Mentoring Session.
 Route::get('/events/mentoring-session', GetAllEvents::class);
+
+Route::post('/app/user', GetUserDetailsWithAllChecks::class);
 
 
 
