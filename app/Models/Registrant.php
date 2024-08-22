@@ -39,7 +39,7 @@ class Registrant extends Model
         {
             if ($registrants_event->type === $event->type)
             {
-                throw new Exception('Registrant already registered for ' . $registrants_event->type);
+                throw new Exception($this->name . ' already registered for ' . $registrants_event->type);
             }
         }
         $this->events()->attach($event);

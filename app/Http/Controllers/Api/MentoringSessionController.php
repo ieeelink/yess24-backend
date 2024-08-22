@@ -9,8 +9,6 @@ use App\Models\Registrant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\False_;
-use phpDocumentor\Reflection\Types\Void_;
 
 class MentoringSessionController extends Controller
 {
@@ -115,11 +113,11 @@ class MentoringSessionController extends Controller
             }
 
             DB::commit();
-        } catch (\Exception $exception)
+        } catch (\Error $e)
         {
             DB::rollBack();
             return response()->json([
-                "message" => $exception->getLine() == 88 ? "Registrant Not Found" : $exception->getMessage()
+                "message" => "Registrant not found, enter correct email address"
             ], 405);
         }
 
