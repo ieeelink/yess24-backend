@@ -44,15 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/membership', ImportMembershipCSV::class);
 });
 
-Route::get('/change-is-valid-for-contributors', function (){
-    $checks = Check::whereRelation("registrant", "ticket_type", "Contributor Ticket")->get();
-    foreach ($checks as $check)
-    {
-        $check->isValidated = true;
-        $check->save();
-    }
-    return Check::whereRelation("registrant", "ticket_type", "Contributor Ticket")->get();
-});
+//Route::get('/change-is-valid-for-contributors', function (){
+//    $checks = Check::whereRelation("registrant", "ticket_type", "Contributor Ticket")->get();
+//    foreach ($checks as $check)
+//    {
+//        $check->isValidated = true;
+//        $check->save();
+//    }
+//    return Check::whereRelation("registrant", "ticket_type", "Contributor Ticket")->get();
+//});
 
 
 

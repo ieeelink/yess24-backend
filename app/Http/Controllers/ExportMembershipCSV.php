@@ -12,6 +12,7 @@ class ExportMembershipCSV extends Controller
      */
     public function __invoke(Request $request)
     {
+
         $filename = 'membership.csv';
 
         $headers = [
@@ -33,7 +34,7 @@ class ExportMembershipCSV extends Controller
             ]);
 
             // Fetch and process data in chunks
-            MembershipId::chunk(25, function ($members) use ($handle) {
+            MembershipId::whereRelation("registrant.checks", "isValidated", "false")->chunk(25, function ($members) use ($handle) {
                 foreach ($members as $member) {
                     // Extract data from each employee.
                     $data = [
