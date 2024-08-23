@@ -4,6 +4,7 @@ use App\Http\Controllers\AddValidatedMembershipCSV;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ExportDataOfMembershipNotGiven;
 use App\Http\Controllers\ExportMembershipCSV;
 use App\Http\Controllers\ImportMembershipCSV;
 use App\Http\Controllers\RegistrantController;
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/events/{event}', [EventController::class, 'show']);
     Route::post('/events', [EventController::class, 'store']);
     Route::get('/membership/download', ExportMembershipCSV::class);
+    Route::get('/emails/download', ExportDataOfMembershipNotGiven::class);
     Route::get('/membership/add', AddValidatedMembershipCSV::class);
     Route::post('/membership', ImportMembershipCSV::class);
 });
