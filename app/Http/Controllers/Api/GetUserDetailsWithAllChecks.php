@@ -29,7 +29,7 @@ class GetUserDetailsWithAllChecks extends Controller
         }
 
         $check = $registrant->checks;
-        $check->isAttending = true;
+        $check->isAttending = 1;
         $check->save();
 
         return response()->json([

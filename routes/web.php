@@ -8,7 +8,6 @@ use App\Http\Controllers\ExportDataOfMembershipNotGiven;
 use App\Http\Controllers\ExportMembershipCSV;
 use App\Http\Controllers\ImportMembershipCSV;
 use App\Http\Controllers\RegistrantController;
-use App\Models\Check;
 use App\Utils\Ticket;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +16,7 @@ Route::get('/', function () {
     return view('welcome', [
         'image' => Ticket::generateTicket([
             "name" => "Benison Abraham",
-            "ticket_id" => "YESS0534"
+            "ticket_id" => "YESS0125"
         ], "")
     ]);
 })->name('home');
