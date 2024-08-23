@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\GetAllEvents;
+use App\Http\Controllers\Api\GetDataUsingEmail;
 use App\Http\Controllers\Api\GetUserDetailsWithAllChecks;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
@@ -40,6 +41,10 @@ Route::post('/events/mentoring-session/{event}', MentoringSessionController::cla
 Route::get('/events/mentoring-session', GetAllEvents::class);
 
 Route::post('/app/user', GetUserDetailsWithAllChecks::class);
+
+Route::post('/app/email-validation', GetDataUsingEmail::class);
+
+Route::post('/app/add-validation/{checks}', );
 
 
 
