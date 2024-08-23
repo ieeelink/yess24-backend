@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExportMembershipCSV;
 use App\Http\Controllers\ImportMembershipCSV;
 use App\Http\Controllers\RegistrantController;
+use App\Models\Check;
 use App\Utils\Ticket;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/membership', ImportMembershipCSV::class);
 });
 
+Route::get('/change-is-valid-for-non-ieee', function (){
+    $checks = Check::whereRelation("registrant", "is_ieee_member", "false")->get();
+    foreach ($checks as $check)
+    {
+        $check->isValidated = true;
+        $check->save();
+    }
+    return Check::whereRelation("registrant", "is_ieee_member", "false")->get();
+});
 
 
 
