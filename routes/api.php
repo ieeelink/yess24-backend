@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\GetAllEvents;
+use App\Http\Controllers\Api\GetUserDetailsWithAllChecks;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
 use App\Http\Controllers\Api\TicketController;
-use App\Http\Controllers\GetUserDetailsWithAllChecks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

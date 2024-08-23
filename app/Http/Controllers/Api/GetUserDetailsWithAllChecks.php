@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,17 @@ class GetUserDetailsWithAllChecks extends Controller
         $ticket = Ticket::where("ticket_id", $validated["ticket_id"])->first();
 
         $registrant = $ticket->registrant;
+
+        if($registrant->checks->isAttending)
+        {
+            return response()->json([
+                "message" => "Already attending"
+            ], 406);
+        }
+
+        $check = $registrant->checks;
+        $check->isAttending = true;
+        $check->save();
 
         return response()->json([
             "name" => $registrant->name,
