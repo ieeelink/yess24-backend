@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddValidationForCheckId;
 use App\Http\Controllers\Api\GetAllEvents;
 use App\Http\Controllers\Api\GetDataUsingEmail;
 use App\Http\Controllers\Api\GetUserDetailsWithAllChecks;
@@ -44,7 +45,7 @@ Route::post('/app/user', GetUserDetailsWithAllChecks::class);
 
 Route::post('/app/email-validation', GetDataUsingEmail::class);
 
-Route::post('/app/add-validation/{checks}', );
+Route::post('/app/add-validation', AddValidationForCheckId::class );
 
 
 
