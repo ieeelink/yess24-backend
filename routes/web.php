@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AddValidatedEmailCSV;
 use App\Http\Controllers\AddValidatedMembershipCSV;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BulkController;
+use App\Http\Controllers\EmailViaMembershipValidation;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExportDataOfMembershipNotGiven;
 use App\Http\Controllers\ExportMembershipCSV;
@@ -16,7 +18,7 @@ Route::get('/', function () {
     return view('welcome', [
         'image' => Ticket::generateTicket([
             "name" => "Benison Abraham",
-            "ticket_id" => "YESS0125"
+            "ticket_id" => "YESS0155"
         ], "")
     ]);
 })->name('home');
@@ -43,6 +45,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/emails/download', ExportDataOfMembershipNotGiven::class);
     Route::get('/membership/add', AddValidatedMembershipCSV::class);
     Route::post('/membership', ImportMembershipCSV::class);
+    Route::get('/email/add', AddValidatedEmailCSV::class);
+    Route::post('/email', EmailViaMembershipValidation::class);
+
+//    Route::post('/registrations/{registrant}/edit', ViewEditRegistrant::class);
 });
 
 //Route::get('/change-is-valid-for-contributors', function (){

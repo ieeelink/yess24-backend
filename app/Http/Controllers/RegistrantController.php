@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registrant;
+use Illuminate\Http\Request;
 
 class RegistrantController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $email = $request->input('email');
+
         $registrants = Registrant::query()->paginate(200);
+
+        if($email)
+        {
+            $registrants = Registrant::query()->where('email', $email)->get();
+        }
+
         return view('registrant.index', [
             'registrants' => $registrants
         ]);
