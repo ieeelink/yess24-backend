@@ -8,6 +8,7 @@ use App\Http\Controllers\EmailViaMembershipValidation;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExportDataOfMembershipNotGiven;
 use App\Http\Controllers\ExportMembershipCSV;
+use App\Http\Controllers\FetchAttendeeDetails;
 use App\Http\Controllers\ImportMembershipCSV;
 use App\Http\Controllers\RegistrantController;
 use App\Utils\Ticket;
@@ -48,7 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/email/add', AddValidatedEmailCSV::class);
     Route::post('/email', EmailViaMembershipValidation::class);
 
-//    Route::post('/registrations/{registrant}/edit', ViewEditRegistrant::class);
+    Route::get('/attendee-details', FetchAttendeeDetails::class);
+
 });
 
 //Route::get('/change-is-valid-for-contributors', function (){
