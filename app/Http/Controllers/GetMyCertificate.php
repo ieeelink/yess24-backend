@@ -31,6 +31,8 @@ class GetMyCertificate extends Controller
             ]);
         }
 
+        $registrant->checks->isCertificateIssued = true;
+
         return response()->json([
             'message' => 'Registrant found, certificate has been generated',
 //            'certificate' => $registrant->certificate(),
