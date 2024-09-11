@@ -11,6 +11,7 @@ use App\Http\Controllers\ExportMembershipCSV;
 use App\Http\Controllers\FetchAttendeeDetails;
 use App\Http\Controllers\ImportMembershipCSV;
 use App\Http\Controllers\RegistrantController;
+use App\Http\Controllers\ViewCertificatesDashboard;
 use App\Utils\Certificate;
 use Illuminate\Support\Facades\Route;
 
@@ -47,7 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/email', EmailViaMembershipValidation::class);
 
     Route::get('/attendee-details', FetchAttendeeDetails::class);
-//    Route::get('/certificates', )
+    Route::get('/certificates', [ViewCertificatesDashboard::class, 'index']);
+    Route::get('/certificates/download', [ViewCertificatesDashboard::class, 'download_details']);
 
 });
 
