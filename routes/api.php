@@ -5,12 +5,12 @@ use App\Http\Controllers\Api\AddSwagController;
 use App\Http\Controllers\Api\AddValidationForCheckId;
 use App\Http\Controllers\Api\GetAllEvents;
 use App\Http\Controllers\Api\GetDataUsingEmail;
+use App\Http\Controllers\Api\GetMyCertificate;
 use App\Http\Controllers\Api\GetUserDetailsWithAllChecks;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\GetAppStatus;
-use App\Http\Controllers\GetMyCertificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
