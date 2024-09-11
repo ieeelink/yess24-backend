@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MentoringSessionController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\GetAppStatus;
+use App\Http\Controllers\GetMyCertificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,8 @@ Route::post('/events/mentoring-session/{event}', MentoringSessionController::cla
 
 // Get All Mentoring Session.
 Route::get('/events/mentoring-session', GetAllEvents::class);
+
+Route::post('/certificates', GetMyCertificate::class);
 
 Route::post('/app/user', GetUserDetailsWithAllChecks::class);
 

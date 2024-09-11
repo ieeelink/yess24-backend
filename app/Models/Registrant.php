@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\Certificate;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -63,5 +64,10 @@ class Registrant extends Model
     public function isAttending()
     {
         return $this->checks->isAttending;
+    }
+
+    public function certificate()
+    {
+        return Certificate::generateCertificate($this->name, $this->college_name);
     }
 }

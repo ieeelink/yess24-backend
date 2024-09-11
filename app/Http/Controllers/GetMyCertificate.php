@@ -13,7 +13,7 @@ class GetMyCertificate extends Controller
     public function __invoke(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email|exists:registrant,email'
+            'email' => 'required|email'
         ]);
 
         $registrant = Registrant::where('email', $validated['email'])->first();
@@ -31,11 +31,14 @@ class GetMyCertificate extends Controller
             ]);
         }
 
-        $registrant->checks->isCertificateIssued = true;
+        $checks = $registrant->checks;
+        $checks->isCertificateIssued = true;
+        $checks->save();
+
 
         return response()->json([
             'message' => 'Registrant found, certificate has been generated',
-//            'certificate' => $registrant->certificate(),
+            'certificate' => $registrant->certificate(),
         ]);
     }
 }

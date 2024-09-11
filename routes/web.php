@@ -11,16 +11,13 @@ use App\Http\Controllers\ExportMembershipCSV;
 use App\Http\Controllers\FetchAttendeeDetails;
 use App\Http\Controllers\ImportMembershipCSV;
 use App\Http\Controllers\RegistrantController;
-use App\Utils\Ticket;
+use App\Utils\Certificate;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
     return view('welcome', [
-        'image' => Ticket::generateTicket([
-            "name" => "Benison Abraham",
-            "ticket_id" => "YESS0155"
-        ], "")
+        'image' => Certificate::generateCertificate("Benison Abraham", "College of Engineering Vadakara")
     ]);
 })->name('home');
 
@@ -50,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/email', EmailViaMembershipValidation::class);
 
     Route::get('/attendee-details', FetchAttendeeDetails::class);
+//    Route::get('/certificates', )
 
 });
 

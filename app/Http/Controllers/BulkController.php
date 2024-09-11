@@ -23,7 +23,9 @@ class BulkController extends Controller
 
             $registrant = Registrant::create($data);
 
-            $registrant->checks()->create();
+            $registrant->checks()->create([
+                "isAttending" => true
+            ]);
 
             if($is_ieee && $column[5] !== ""){
                 $registrant->membership_id()->create([
