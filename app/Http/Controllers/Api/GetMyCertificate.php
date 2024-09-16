@@ -29,7 +29,7 @@ class GetMyCertificate extends Controller
         {
             return response()->json([
                 'message' => 'It says that you were not attending the event, if there is a mistake report immediately via form given below',
-            ]);
+            ], 404);
         }
 
         $checks = $registrant->checks;
