@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AddFoodValidation;
 use App\Http\Controllers\Api\AddSwagController;
 use App\Http\Controllers\Api\AddValidationForCheckId;
+use App\Http\Controllers\Api\ChangeToAttendee;
 use App\Http\Controllers\Api\GetAllEvents;
 use App\Http\Controllers\Api\GetDataUsingEmail;
 use App\Http\Controllers\Api\GetMyCertificate;
@@ -58,6 +59,8 @@ Route::post('/app/food-validation', AddFoodValidation::class);
 Route::post('/app/swag-validation', AddSwagController::class);
 
 Route::get('/app/status', GetAppStatus::class);
+
+Route::post('/attendees/add', ChangeToAttendee::class);
 
 
 
